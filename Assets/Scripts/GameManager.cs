@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
         uiManager.UpdateGoldText(score);
     }
 
+    // Pause/unpause the game by adjusting the time scale
     public void SetPaused(bool setPaused) {
         isPaused = setPaused;
 

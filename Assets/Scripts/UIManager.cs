@@ -22,19 +22,33 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI shopGoldText;
 
+    private bool isShopOpen = false;
+    public bool IsShopOpen { get { return isShopOpen; } }
+
 
     private void Start() {
+        // Get references to spawn and game managers
         spawnManager = transform.parent.GetComponentInChildren<SpawnManager>();
         gameManager = transform.parent.GetComponentInChildren<GameManager>();
 
+        // Set the cursor to the crosshair
         SetCrosshairCursor();
     }
 
-    // Set the crosshair cursor sprite
+    private void Update() {
+        // If the player is in the shop and presses "Esc" then exit the shop
+        if (isShopOpen && Input.GetKeyDown(KeyCode.Escape)) {
+            SetShopScreenActive(false);
+        }    
+    }
+
+
+    // Set the cursor sprite to the crosshair
     private void SetCrosshairCursor() {
         Vector2 midpoint = new Vector2(crosshairCursor.width / 2, crosshairCursor.height / 2);
         Cursor.SetCursor(crosshairCursor, midpoint, CursorMode.Auto);
     }
+
 
     // Update the health text in the UI
     public void UpdateHealthText(int health) {
@@ -65,10 +79,13 @@ public class UIManager : MonoBehaviour
 
     // Set the shop screen active
     public void SetShopScreenActive(bool setActive) {
+        isShopOpen = setActive;
+
         gameScreen.SetActive(!setActive);
         shopScreen.SetActive(setActive);
         gameManager.SetPaused(setActive);
 
+        // Set the cursor depending on if the shop is open or closed
         if (setActive) {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
@@ -77,10 +94,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
+    // Change the cursor to a pointer (call this on mouse over a button)
     public void OnMouseOverButton() {
         Cursor.SetCursor(pointerCursor, Vector2.zero, CursorMode.Auto);
     }
 
+    // Change the cursor to default (call this on mouse exit of a button)
     public void OnMouseExitButton() {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
