@@ -5,7 +5,7 @@ using UnityEngine;
 public class Treasure : Pickup {
 
     [SerializeField]
-    private int treasureScore;
+    private int goldAmount;
 
     private GameManager gameManager;
 
@@ -14,8 +14,8 @@ public class Treasure : Pickup {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
-    // Increase the player's score on pickup
+    // Increase the player's gold on pickup
     protected override void OnPickup() {
-        gameManager.IncreaseScore(treasureScore);
+        gameManager.IncreaseGold(goldAmount);
     }
 }

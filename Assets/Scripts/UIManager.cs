@@ -88,16 +88,26 @@ public class UIManager : MonoBehaviour
         // Set the cursor depending on if the shop is open or closed
         if (setActive) {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            RefreshShopButtons();
+
         }
         else {
             SetCrosshairCursor();
         }
     }
 
+    public void RefreshShopButtons() {
+        foreach (ShopButton shopButton in shopScreen.GetComponentsInChildren<ShopButton>()) {
+            shopButton.RefreshButton();
+        }
+    }
+
 
     // Change the cursor to a pointer (call this on mouse over a button)
-    public void OnMouseOverButton() {
-        Cursor.SetCursor(pointerCursor, Vector2.zero, CursorMode.Auto);
+    public void OnMouseOverButton(Button button) {
+        if (button.IsInteractable()) {
+            Cursor.SetCursor(pointerCursor, Vector2.zero, CursorMode.Auto);
+        }
     }
 
     // Change the cursor to default (call this on mouse exit of a button)
