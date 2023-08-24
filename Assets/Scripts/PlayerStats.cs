@@ -4,5 +4,13 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    private int maxHealthLevel, cannonDamageLevel, cannonSpeedLevel, moveSpeedLevel, fireRateLevel;
+    public enum StatType {
+        maxHealth,
+        cannonDamage,
+        cannonSpeed,
+        fireRate,
+        moveSpeed
+    }
+
+    private int maxHealthLevel, cannonDamageLevel, cannonSpeedLevel, fireRateLevel, moveSpeedLevel;
 }

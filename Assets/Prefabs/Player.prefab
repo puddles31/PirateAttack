@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2675295003606887312}
   - component: {fileID: 6336278354994182350}
   - component: {fileID: 2496324659881632487}
+  - component: {fileID: 3814563059478889994}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -26,6 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3198362880719365012}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,7 +35,6 @@ Transform:
   m_Children:
   - {fileID: 6098774216609937898}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2675295003606887312
 CapsuleCollider:
@@ -104,9 +105,21 @@ MonoBehaviour:
   angularAcceleration: 3.5
   maxAngularVelocity: 0.8
   angularDrag: 4
-  shootCooldown: 0.5
-  cannonballSpeed: 25
-  initialHealth: 3
+  shootCooldown: 1
+  cannonballSpeed: 35
+  maxHealth: 3
+--- !u!114 &3814563059478889994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198362880719365012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f3d07d1a8509c644b8a9d390a5795ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &240532167547020632
 PrefabInstance:
   m_ObjectHideFlags: 0

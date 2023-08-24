@@ -18,30 +18,31 @@ public class ShopButton : MonoBehaviour
     private Color soldOutColor, tooExpensiveColor, defaultColor;
 
     [SerializeField]
-    private string itemName, itemType;
-
-    [SerializeField]
-    private int itemPrice;
+    private ShopItem shopItem;
 
     private GameManager gameManager;
     private UIManager uiManager;
+    private PlayerStats playerStats;
+
 
     void Awake() {
         button = gameObject.GetComponent<Button>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
 
         soldOutColor = new Color32(100, 100, 100, 255);
         tooExpensiveColor = new Color32(225, 0, 0, 255);
         defaultColor = new Color32(50, 50, 50, 255);
     }
 
+
     // Refresh the button's information
     public void RefreshButton() {
         // Update the text fields
-        nameText.text = itemName;
-        typeText.text = itemType;
-        priceText.text = itemPrice + " Gold";
+        nameText.text = shopItem.Name;
+        typeText.text = shopItem.Type;
+        priceText.text = shopItem.Price + " Gold";
 
         if (isSoldOut) {
             button.interactable = false;
@@ -53,7 +54,7 @@ public class ShopButton : MonoBehaviour
             button.colors = colorBlock;
             priceText.color = defaultColor;
         }
-        else if (gameManager.Gold < itemPrice) {
+        else if (gameManager.Gold < shopItem.Price) {
             button.interactable = false;
             priceText.color = tooExpensiveColor;
         }
@@ -65,11 +66,13 @@ public class ShopButton : MonoBehaviour
 
 
     public void PurchaseItem() {
-        // Check if the 
-        if (gameManager.Gold >= itemPrice) {
-            gameManager.DecreaseGold(itemPrice);
+        // Check if the player has enough gold for the item
+        if (gameManager.Gold >= shopItem.Price) {
+            gameManager.DecreaseGold(shopItem.Price);
             isSoldOut = true;
-            // APPLY THE PURCHASE HERE
+            
+
+
             uiManager.RefreshShopButtons();
             uiManager.OnMouseExitButton();
         }

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     private bool isPaused;
     public bool IsPaused { get { return isPaused; } }
 
-    private int gold = 70;
+    private int gold = 75;
     public int Gold { get { return gold; } }
 
 
