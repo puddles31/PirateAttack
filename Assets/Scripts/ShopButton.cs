@@ -17,8 +17,7 @@ public class ShopButton : MonoBehaviour
     private bool isSoldOut;
     private Color soldOutColor, tooExpensiveColor, defaultColor;
 
-    [SerializeField]
-    private ShopItem shopItem;
+    public ShopItem shopItem;
 
     private GameManager gameManager;
     private UIManager uiManager;

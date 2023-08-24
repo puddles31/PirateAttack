@@ -13,12 +13,26 @@ public class Merchant : MonoBehaviour
     [SerializeField]
     private GameObject interactText;
 
+    [SerializeField]
+    private GameObject shopScreen;
+    private ShopButton[] shopButtons;
+
 
     void Start()
     {
         // Get references to UI manager and player
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
         player = GameObject.FindGameObjectWithTag("Player");
+        shopButtons = shopScreen.GetComponentsInChildren<ShopButton>();
+
+        CreateRandomShop();
+    }
+
+
+    private void CreateRandomShop() {
+        foreach (var shopButton in shopButtons) {
+            shopButton.shopItem = new Consumable("Ammo Box", 25);
+        }
     }
 
     
