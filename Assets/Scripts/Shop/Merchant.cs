@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ public class Merchant : MonoBehaviour
 
     private UIManager uiManager;
     private GameObject player;
+    private PlayerStats playerStats;
+    private Consumables consumables;
+
     private float interactDistance = 16;
 
     [SerializeField]
@@ -23,6 +27,8 @@ public class Merchant : MonoBehaviour
         // Get references to UI manager and player
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
         player = GameObject.FindGameObjectWithTag("Player");
+        playerStats = player.GetComponent<PlayerStats>();
+        consumables = gameObject.GetComponent<Consumables>();
         shopButtons = shopScreen.GetComponentsInChildren<ShopButton>();
 
         CreateRandomShop();
@@ -30,9 +36,11 @@ public class Merchant : MonoBehaviour
 
 
     private void CreateRandomShop() {
-        foreach (var shopButton in shopButtons) {
-            shopButton.shopItem = new Consumable("Ammo Box", 25);
+        foreach (var tuple in shopButtons.Zip(playerStats.RandomSelection(5), (b, s) => new { Button = b, Stat = s })) {
+            tuple.Button.shopItem = tuple.Stat.ToShopItem();
         }
+
+        shopButtons[5].shopItem = consumables.RandomSelection(1).First().ToShopItem();
     }
 
     

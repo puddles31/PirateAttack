@@ -21,14 +21,12 @@ public class ShopButton : MonoBehaviour
 
     private GameManager gameManager;
     private UIManager uiManager;
-    private PlayerStats playerStats;
 
 
     void Awake() {
         button = gameObject.GetComponent<Button>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
 
         soldOutColor = new Color32(100, 100, 100, 255);
         tooExpensiveColor = new Color32(225, 0, 0, 255);
@@ -69,8 +67,8 @@ public class ShopButton : MonoBehaviour
         if (gameManager.Gold >= shopItem.Price) {
             gameManager.DecreaseGold(shopItem.Price);
             isSoldOut = true;
-            
 
+            shopItem.OnPurchase();
 
             uiManager.RefreshShopButtons();
             uiManager.OnMouseExitButton();
