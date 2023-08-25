@@ -8,8 +8,7 @@ public class Consumables : MonoBehaviour {
 
     private List<Consumable> consumablesList;
 
-    public Consumable healthKit;
-    public Consumable ammoBox;
+    private Consumable healthKit, ammoBox;
 
     private System.Random rnd;
 

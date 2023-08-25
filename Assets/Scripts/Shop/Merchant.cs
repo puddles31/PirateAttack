@@ -11,6 +11,7 @@ public class Merchant : MonoBehaviour
     private GameObject player;
     private PlayerStats playerStats;
     private Consumables consumables;
+    private AltFires altFires;
 
     private float interactDistance = 16;
 
@@ -29,6 +30,7 @@ public class Merchant : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerStats = player.GetComponent<PlayerStats>();
         consumables = gameObject.GetComponent<Consumables>();
+        altFires = gameObject.GetComponent<AltFires>();
         shopButtons = shopScreen.GetComponentsInChildren<ShopButton>();
 
         CreateRandomShop();
@@ -36,11 +38,15 @@ public class Merchant : MonoBehaviour
 
 
     private void CreateRandomShop() {
-        foreach (var tuple in shopButtons.Zip(playerStats.RandomSelection(5), (b, s) => new { Button = b, Stat = s })) {
-            tuple.Button.shopItem = tuple.Stat.ToShopItem();
+        foreach (var tuple in shopButtons.Zip(consumables.RandomSelection(2), (b, c) => new { Button = b, Consumable = c })) {
+            tuple.Button.shopItem = tuple.Consumable.ToShopItem();
         }
 
-        shopButtons[5].shopItem = consumables.RandomSelection(1).First().ToShopItem();
+        shopButtons[2].shopItem = altFires.RandomSelection(1).First().ToShopItem();
+
+        foreach (var tuple in shopButtons.Skip(3).Zip(playerStats.RandomSelection(3), (b, s) => new { Button = b, Stat = s })) {
+            tuple.Button.shopItem = tuple.Stat.ToShopItem();
+        }
     }
 
     

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,10 @@ using UnityEngine;
 public class PlayerController : Ship {
     
     private Plane groundPlane;
-    private bool onShootCooldown;
+    private bool onShootCooldown, onAltFireCooldown;
+    private float altFireCooldown;
+    private int altFireAmmo, maxAltFireAmmo;
+    private Action<Vector3> AltFireAction;
     private UIManager uiManager;
     private GameManager gameManager;
 
@@ -31,18 +35,32 @@ public class PlayerController : Ship {
         horizontalForce = Input.GetAxis("Horizontal");
         verticalForce = Mathf.Max(0f, Input.GetAxis("Vertical"));
 
-        // Shoot cannonball on mouse click, starting a cooldown timer
+        // Shoot cannonball on left mouse click, starting a cooldown timer
         if (Input.GetMouseButtonDown(0) && !onShootCooldown && !gameManager.IsPaused) {
             onShootCooldown = true;
             StartCoroutine(ShootCooldownTimer());
             ShootCannonball(CalculateMousePos());
         }
+
+        // Shoot alternate fire on right mouse click, starting a cooldown timer and decreasing ammo
+        if (Input.GetMouseButtonDown(1) && !onAltFireCooldown && altFireAmmo > 0 && !gameManager.IsPaused) {
+            onAltFireCooldown = true;
+            altFireAmmo--;
+            StartCoroutine(AltFireCooldownTimer());
+            AltFireAction(CalculateMousePos());
+        }
     }
+
 
     // Cooldown timer for shooting cannonballs
     IEnumerator ShootCooldownTimer() {
         yield return new WaitForSeconds(shootCooldown);
         onShootCooldown = false;
+    }
+
+    IEnumerator AltFireCooldownTimer() {
+        yield return new WaitForSeconds(altFireCooldown);
+        onAltFireCooldown = false;
     }
 
 
@@ -61,6 +79,16 @@ public class PlayerController : Ship {
 
         return mouseWorldPos;
     }
+
+
+    public void SetAltFire(int maxAltFireAmmo, float altFireCooldown, Action<Vector3> AltFireAction) {
+        this.maxAltFireAmmo = maxAltFireAmmo;
+        this.altFireCooldown = altFireCooldown;
+        this.AltFireAction = AltFireAction;
+
+        altFireAmmo = maxAltFireAmmo;
+    }
+
 
     // Update the health UI text when increasing health
     public override void IncreaseHealth(int healthIncrease) {

@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 5748778112059767797}
   - component: {fileID: 5014421090725274762}
   - component: {fileID: 683812940687664069}
+  - component: {fileID: 4589440947475839979}
   m_Layer: 0
   m_Name: Merchant
   m_TagString: Untagged
@@ -432,6 +433,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d91cd1ed471bf5f498ae8a7acee0ad8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4589440947475839979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321481934350100001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a674e367e3a2bad4bbb241a35c85ca79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5571018040085920183

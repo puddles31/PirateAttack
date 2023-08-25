@@ -8,11 +8,8 @@ public class PlayerStats : MonoBehaviour {
 
     private List<PlayerStat> statsList;
 
-    public PlayerStat maxHealth;
-    public PlayerStat cannonballDamage;
-    public PlayerStat cannonballSpeed;
-    public PlayerStat fireRate;
-    public PlayerStat moveSpeed;
+    [SerializeField]
+    private PlayerStat maxHealth, cannonballDamage, cannonballSpeed, fireRate, moveSpeed;
 
     private System.Random rnd;
 
@@ -24,7 +21,7 @@ public class PlayerStats : MonoBehaviour {
         fireRate = new(3, "Fire Rate", () => { Debug.Log("FIRE RATE!"); });
         moveSpeed = new(4, "Move Speed", () => { Debug.Log("MOVE SPEED!"); });
 
-        statsList = new List<PlayerStat>() { maxHealth, cannonballDamage, cannonballSpeed, fireRate, moveSpeed};
+        statsList = new List<PlayerStat>() { maxHealth, cannonballDamage, cannonballSpeed, fireRate, moveSpeed };
 
         rnd = new System.Random();
     }
