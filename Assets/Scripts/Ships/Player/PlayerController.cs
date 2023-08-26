@@ -6,10 +6,11 @@ using UnityEngine;
 public class PlayerController : Ship {
     
     private Plane groundPlane;
-    private bool onShootCooldown, onAltFireCooldown;
-    private float altFireCooldown;
+    private bool onShootCooldown, onAltFireCooldown, onSpecialAbilityCooldown;
+    private float altFireCooldown, specialAbilityCooldown;
     private int altFireAmmo, maxAltFireAmmo;
     private Action<Vector3> AltFireAction;
+    private Action SpecialAbilityAction;
     private UIManager uiManager;
     private GameManager gameManager;
 
@@ -27,6 +28,9 @@ public class PlayerController : Ship {
 
         // Get reference to Game Manager
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
+        AltFireAction = (pos) => { };
+        SpecialAbilityAction = () => { };
     }
 
 
@@ -49,6 +53,13 @@ public class PlayerController : Ship {
             StartCoroutine(AltFireCooldownTimer());
             AltFireAction(CalculateMousePos());
         }
+
+        // Use special ability on spacebar, starting a cooldown timer
+        if (Input.GetKeyDown(KeyCode.Space) && !onSpecialAbilityCooldown && !gameManager.IsPaused) {
+            onSpecialAbilityCooldown = true;
+            StartCoroutine(SpecialAbilityCooldownTimer());
+            SpecialAbilityAction();
+        }
     }
 
 
@@ -58,9 +69,16 @@ public class PlayerController : Ship {
         onShootCooldown = false;
     }
 
+    // Cooldown timer for alt fire
     IEnumerator AltFireCooldownTimer() {
         yield return new WaitForSeconds(altFireCooldown);
         onAltFireCooldown = false;
+    }
+
+    // Cooldown timer for special ability
+    IEnumerator SpecialAbilityCooldownTimer() {
+        yield return new WaitForSeconds(specialAbilityCooldown);
+        onSpecialAbilityCooldown = false;
     }
 
 
@@ -87,6 +105,11 @@ public class PlayerController : Ship {
         this.AltFireAction = AltFireAction;
 
         altFireAmmo = maxAltFireAmmo;
+    }
+
+    public void SetSpecialAbility(float specialAbilityCooldown, Action SpecialAbilityAction) {
+        this.specialAbilityCooldown = specialAbilityCooldown;
+        this.SpecialAbilityAction = SpecialAbilityAction;
     }
 
 
