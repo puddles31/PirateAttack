@@ -7,6 +7,9 @@ public class Cannonball : MonoBehaviour {
     private float speed;
     public float Speed { set { speed = value; } }
 
+    private int damage;
+    public int Damage { set { damage = value; } }
+
     private bool isFriendly;
     public bool IsFriendly { set { isFriendly = value; } }
 
@@ -23,11 +26,11 @@ public class Cannonball : MonoBehaviour {
             Destroy(gameObject);
         }
         else if (isFriendly && other.CompareTag("Enemy")) {
-            other.GetComponent<Enemy>().DecreaseHealth(1); // Decrease enemy health
+            other.GetComponent<Enemy>().DecreaseHealth(damage); // Decrease enemy health
             Destroy(gameObject); // Destroy cannonball
         }
         else if (!isFriendly && other.CompareTag("Player")) {
-            other.GetComponent<PlayerController>().DecreaseHealth(1); // Decrease player health
+            other.GetComponent<PlayerController>().DecreaseHealth(damage); // Decrease player health
             Destroy(gameObject); // Destroy cannonball
         }
     }

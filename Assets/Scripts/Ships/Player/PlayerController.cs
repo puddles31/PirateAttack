@@ -125,4 +125,34 @@ public class PlayerController : Ship {
         uiManager.UpdateHealthText(health);
     }
 
+    // Increase the player's maximum health, and healing for the same amount
+    public void IncreaseMaxHealth(int maxHealthIncrease) {
+        maxHealth += maxHealthIncrease;
+        IncreaseHealth(maxHealthIncrease);
+    }
+
+    // Increase the player's acceleration
+    public void IncreaseAcceleration(float accelerationIncrease) {
+        acceleration += accelerationIncrease;
+    }
+
+    // Increase the player's angular acceleration
+    public void IncreaseAngularAcceleration(float angularAccelerationIncrease) {
+        angularAcceleration += angularAccelerationIncrease;
+    }
+
+    // Decrease the player's shoot cooldown, without going below 0.1
+    public void DecreaseShootCooldown(float shootCooldownDecrease) {
+        shootCooldown = Mathf.Max(0.1f, shootCooldown - shootCooldownDecrease);
+    }
+
+    // Increase the player's cannonball speed
+    public void IncreaseCannonballSpeed(float cannonballSpeedIncrease) {
+        cannonballSpeed += cannonballSpeedIncrease;
+    }
+
+    // Increase the player's cannonball damage
+    public void IncreaseCannonballDamage(int cannonballDamageIncrease) {
+        cannonballDamage += cannonballDamageIncrease;
+    }
 }

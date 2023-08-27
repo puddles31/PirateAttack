@@ -38,14 +38,18 @@ public class Merchant : MonoBehaviour
         CreateRandomShop();
     }
 
-
-    private void CreateRandomShop() {
+    [ContextMenu("Generate Random Shop")]
+    public void CreateRandomShop() {
         shopButtons[0].shopItem = consumables.RandomSelection(1).First().ToShopItem();
         shopButtons[1].shopItem = altFires.RandomSelection(1).First().ToShopItem();
         shopButtons[2].shopItem = specialAbilities.RandomSelection(1).First().ToShopItem();
 
         foreach (var tuple in shopButtons.Skip(3).Zip(playerStats.RandomSelection(3), (b, s) => new { Button = b, Stat = s })) {
             tuple.Button.shopItem = tuple.Stat.ToShopItem();
+        }
+
+        foreach (var shopButton in shopButtons) {
+            shopButton.isSoldOut = false;
         }
     }
 

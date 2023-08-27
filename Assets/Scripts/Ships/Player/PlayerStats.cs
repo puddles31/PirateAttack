@@ -12,14 +12,17 @@ public class PlayerStats : MonoBehaviour {
     private PlayerStat maxHealth, cannonballDamage, cannonballSpeed, fireRate, moveSpeed;
 
     private System.Random rnd;
+    private PlayerController playerController;
 
 
     private void Start() {
-        maxHealth = new(0, "Max Health", () => { Debug.Log("HEALTH!"); });
-        cannonballDamage = new(1, "Cannonball Damage", () => { Debug.Log("DAMAGE!"); });
-        cannonballSpeed = new(2, "Cannonball Speed", () => { Debug.Log("FIRE SPEED!"); });
-        fireRate = new(3, "Fire Rate", () => { Debug.Log("FIRE RATE!"); });
-        moveSpeed = new(4, "Move Speed", () => { Debug.Log("MOVE SPEED!"); });
+        playerController = gameObject.GetComponent<PlayerController>();
+
+        maxHealth = new(0, "Max Health", () => { playerController.IncreaseMaxHealth(1); });
+        cannonballDamage = new(1, "Cannonball Damage", () => { playerController.IncreaseCannonballDamage(1); });
+        cannonballSpeed = new(2, "Cannonball Speed", () => { playerController.IncreaseCannonballSpeed(5); });
+        fireRate = new(3, "Fire Rate", () => { playerController.DecreaseShootCooldown(0.12f); });
+        moveSpeed = new(4, "Move Speed", () => { playerController.IncreaseAcceleration(2); playerController.IncreaseAngularAcceleration(0.3f); });
 
         statsList = new List<PlayerStat>() { maxHealth, cannonballDamage, cannonballSpeed, fireRate, moveSpeed };
 

@@ -88,6 +88,8 @@ public class UIManager : MonoBehaviour
         // Set the cursor depending on if the shop is open or closed
         if (setActive) {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            // Uncomment to enable randomised shop each time merchant is opened
+            // GameObject.FindGameObjectWithTag("Merchant").GetComponent<Merchant>().CreateRandomShop();
             RefreshShopButtons();
 
         }

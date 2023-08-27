@@ -12,19 +12,26 @@ public abstract class Ship : MonoBehaviour {
     private GameObject cannonballPrefab;
 
     [SerializeField]
-    private float acceleration, maxVelocity, drag;
+    protected float acceleration;
     [SerializeField]
-    private float angularAcceleration, maxAngularVelocity, angularDrag;
+    private float maxVelocity, drag;
+
+    [SerializeField]
+    protected float angularAcceleration;
+    [SerializeField]
+    private float maxAngularVelocity, angularDrag;
 
     protected float verticalForce, horizontalForce;
 
     [SerializeField]
     protected float shootCooldown = 0.5f;
     [SerializeField]
-    private float cannonballSpeed = 25;
+    protected float cannonballSpeed = 25;
+    [SerializeField]
+    protected int cannonballDamage = 1;
 
     [SerializeField]
-    private int maxHealth = 3;
+    protected int maxHealth = 3;
     protected int health;
 
 
@@ -62,6 +69,7 @@ public abstract class Ship : MonoBehaviour {
         var cannonballTemp = Instantiate(cannonballPrefab, transform.position, Quaternion.LookRotation(towardsTarget));
         cannonballTemp.GetComponent<Cannonball>().IsFriendly = isPlayer;
         cannonballTemp.GetComponent<Cannonball>().Speed = cannonballSpeed;
+        cannonballTemp.GetComponent<Cannonball>().Damage = cannonballDamage;
     }
 
 

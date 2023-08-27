@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - UI
   - GameManager
+  - Merchant
   layers:
   - Default
   - TransparentFX

@@ -14,8 +14,8 @@ public class ShopButton : MonoBehaviour
     [SerializeField]
     private GameObject soldOutText;
 
-    private bool isSoldOut;
-    private Color soldOutColor, tooExpensiveColor, defaultColor;
+    public bool isSoldOut;
+    private Color tooExpensiveButtonColor, soldOutButtonColor, tooExpensiveTextColor, defaultTextColor;
 
     public ShopItem shopItem;
 
@@ -28,9 +28,10 @@ public class ShopButton : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
 
-        soldOutColor = new Color32(100, 100, 100, 255);
-        tooExpensiveColor = new Color32(225, 0, 0, 255);
-        defaultColor = new Color32(50, 50, 50, 255);
+        tooExpensiveButtonColor = new Color32(170, 170, 170, 255);
+        soldOutButtonColor = new Color32(100, 100, 100, 255);
+        tooExpensiveTextColor = new Color32(225, 0, 0, 255);
+        defaultTextColor = new Color32(50, 50, 50, 255);
     }
 
 
@@ -47,17 +48,25 @@ public class ShopButton : MonoBehaviour
 
             // Update the disabled color for the button
             var colorBlock = button.colors;
-            colorBlock.disabledColor = soldOutColor;
+            colorBlock.disabledColor = soldOutButtonColor;
             button.colors = colorBlock;
-            priceText.color = defaultColor;
+            priceText.color = defaultTextColor;
         }
         else if (gameManager.Gold < shopItem.Price) {
             button.interactable = false;
-            priceText.color = tooExpensiveColor;
+            soldOutText.SetActive(false);
+
+            // Update the disabled color for the button
+            var colorBlock = button.colors;
+            colorBlock.disabledColor = tooExpensiveButtonColor;
+            button.colors = colorBlock;
+            priceText.color = tooExpensiveTextColor;
         }
         else {
             button.interactable = true;
-            priceText.color = defaultColor;
+            soldOutText.SetActive(false);
+
+            priceText.color = defaultTextColor;
         }
     }
 

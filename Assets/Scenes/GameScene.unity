@@ -888,6 +888,7 @@ MonoBehaviour:
   typeText: {fileID: 388210803}
   priceText: {fileID: 363598475}
   soldOutText: {fileID: 1587109961}
+  isSoldOut: 0
 --- !u!1 &334019318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1519,6 +1520,7 @@ MonoBehaviour:
   typeText: {fileID: 1480801253}
   priceText: {fileID: 1829504988}
   soldOutText: {fileID: 1885312134}
+  isSoldOut: 0
 --- !u!1 &448815323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,6 +1898,7 @@ MonoBehaviour:
   typeText: {fileID: 1471976436}
   priceText: {fileID: 1293972487}
   soldOutText: {fileID: 2138710614}
+  isSoldOut: 0
 --- !u!1 &521242788
 GameObject:
   m_ObjectHideFlags: 0
@@ -3898,6 +3901,7 @@ MonoBehaviour:
   typeText: {fileID: 1233587612}
   priceText: {fileID: 1709089160}
   soldOutText: {fileID: 1489451409}
+  isSoldOut: 0
 --- !u!4 &1220628714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 615010652040901257, guid: 928b7ab55e4c640469989d2fad85c7d7, type: 3}
@@ -4433,6 +4437,7 @@ MonoBehaviour:
   typeText: {fileID: 228815298}
   priceText: {fileID: 1465040867}
   soldOutText: {fileID: 1802709111}
+  isSoldOut: 0
 --- !u!1 &1314902612
 GameObject:
   m_ObjectHideFlags: 0
@@ -6769,6 +6774,7 @@ MonoBehaviour:
   typeText: {fileID: 814112391}
   priceText: {fileID: 1668071961}
   soldOutText: {fileID: 32162269}
+  isSoldOut: 0
 --- !u!1 &1752518106
 GameObject:
   m_ObjectHideFlags: 0
@@ -7587,6 +7593,14 @@ PrefabInstance:
     - target: {fileID: 8321481934350100001, guid: e800fc4948152cd44b56255545448b95, type: 3}
       propertyPath: m_Name
       value: Merchant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321481934350100001, guid: e800fc4948152cd44b56255545448b95, type: 3}
+      propertyPath: m_TagString
+      value: Merchant
+      objectReference: {fileID: 0}
+    - target: {fileID: 9148039318097400013, guid: e800fc4948152cd44b56255545448b95, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

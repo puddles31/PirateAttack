@@ -103,11 +103,14 @@ MonoBehaviour:
   maxVelocity: 20
   drag: 1
   angularAcceleration: 3.5
-  maxAngularVelocity: 0.8
+  maxAngularVelocity: 5
   angularDrag: 4
   shootCooldown: 1
   cannonballSpeed: 35
+  cannonballDamage: 1
   maxHealth: 3
+  velocity: 0
+  angularVelocity: 0
 --- !u!114 &3814563059478889994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +123,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f3d07d1a8509c644b8a9d390a5795ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth:
+    statLevel: 0
+  cannonballDamage:
+    statLevel: 0
+  cannonballSpeed:
+    statLevel: 0
+  fireRate:
+    statLevel: 0
+  moveSpeed:
+    statLevel: 0
 --- !u!1001 &240532167547020632
 PrefabInstance:
   m_ObjectHideFlags: 0
