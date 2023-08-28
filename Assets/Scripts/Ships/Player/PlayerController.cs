@@ -24,7 +24,7 @@ public class PlayerController : Ship {
 
         // Get reference to UI Manager and set initial health text
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
-        uiManager.UpdateHealthText(health);
+        uiManager.UpdateHealthText(health, maxHealth);
 
         // Get reference to Game Manager
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -116,13 +116,13 @@ public class PlayerController : Ship {
     // Update the health UI text when increasing health
     public override void IncreaseHealth(int healthIncrease) {
         base.IncreaseHealth(healthIncrease);
-        uiManager.UpdateHealthText(health);
+        uiManager.UpdateHealthText(health, maxHealth);
     }
 
     // Update the health UI text when decreasing health
     public override void DecreaseHealth(int healthDecrease) {
         base.DecreaseHealth(healthDecrease);
-        uiManager.UpdateHealthText(health);
+        uiManager.UpdateHealthText(health, maxHealth);
     }
 
     // Increase the player's maximum health, and healing for the same amount

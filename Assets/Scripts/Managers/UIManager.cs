@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject shopScreen;
     [SerializeField]
-    private TextMeshProUGUI shopGoldText;
+    private TextMeshProUGUI shopHealthText, shopGoldText;
 
     private bool isShopOpen = false;
     public bool IsShopOpen { get { return isShopOpen; } }
@@ -51,8 +51,9 @@ public class UIManager : MonoBehaviour
 
 
     // Update the health text in the UI
-    public void UpdateHealthText(int health) {
-        healthText.text = "Health: " + health;
+    public void UpdateHealthText(int health, int maxHealth) {
+        healthText.text = "Health: " + health + " / " + maxHealth;
+        shopHealthText.text = "Health: " + health + " / " + maxHealth;
     }
 
     // Update the gold text in the UI
@@ -89,7 +90,7 @@ public class UIManager : MonoBehaviour
         if (setActive) {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             // Uncomment to enable randomised shop each time merchant is opened
-            // GameObject.FindGameObjectWithTag("Merchant").GetComponent<Merchant>().CreateRandomShop();
+             GameObject.FindGameObjectWithTag("Merchant").GetComponent<Merchant>().CreateRandomShop();
             RefreshShopButtons();
 
         }
