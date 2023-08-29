@@ -7,8 +7,8 @@ public class PlayerController : Ship {
     
     private Plane groundPlane;
     private bool onShootCooldown, onAltFireCooldown, onSpecialAbilityCooldown;
-    private float altFireCooldown, specialAbilityCooldown;
-    private int altFireAmmo, maxAltFireAmmo;
+    private float altFireCooldown;
+    private int altFireAmmo, maxAltFireAmmo, specialAbilityCooldown;
     private Action<Vector3> AltFireAction;
     private Action SpecialAbilityAction;
     private UIManager uiManager;
@@ -46,16 +46,16 @@ public class PlayerController : Ship {
             ShootCannonball(CalculateMousePos());
         }
 
-        // Shoot alternate fire on right mouse click, starting a cooldown timer and decreasing ammo
-        if (Input.GetMouseButtonDown(1) && !onAltFireCooldown && altFireAmmo > 0 && !gameManager.IsPaused) {
+        // Shoot alternate fire on right mouse click, starting a cooldown timer and decreasing ammo - only if player has alt-fire (when max ammo not 0)
+        if (Input.GetMouseButtonDown(1) && !onAltFireCooldown && altFireAmmo > 0 && maxAltFireAmmo > 0 && !gameManager.IsPaused) {
             onAltFireCooldown = true;
-            altFireAmmo--;
+            DecreaseAltFireAmmo(1);
             StartCoroutine(AltFireCooldownTimer());
             AltFireAction(CalculateMousePos());
         }
 
-        // Use special ability on spacebar, starting a cooldown timer
-        if (Input.GetKeyDown(KeyCode.Space) && !onSpecialAbilityCooldown && !gameManager.IsPaused) {
+        // Use special ability on spacebar, starting a cooldown timer - only if player has special ability (when cooldown not 0)
+        if (Input.GetKeyDown(KeyCode.Space) && !onSpecialAbilityCooldown && specialAbilityCooldown != 0 && !gameManager.IsPaused) {
             onSpecialAbilityCooldown = true;
             StartCoroutine(SpecialAbilityCooldownTimer());
             SpecialAbilityAction();
@@ -77,7 +77,14 @@ public class PlayerController : Ship {
 
     // Cooldown timer for special ability
     IEnumerator SpecialAbilityCooldownTimer() {
-        yield return new WaitForSeconds(specialAbilityCooldown);
+        uiManager.SetSpecialAbilityCooldownActive(true);
+        
+        for (int i = specialAbilityCooldown; i > 0; i--) {
+            uiManager.UpdateSpecialAbilityCooldownText(i);
+            yield return new WaitForSeconds(1);
+        }
+
+        uiManager.SetSpecialAbilityCooldownActive(false);
         onSpecialAbilityCooldown = false;
     }
 
@@ -101,15 +108,20 @@ public class PlayerController : Ship {
 
     public void SetAltFire(int maxAltFireAmmo, float altFireCooldown, Action<Vector3> AltFireAction) {
         this.maxAltFireAmmo = maxAltFireAmmo;
+        altFireAmmo = maxAltFireAmmo;
         this.altFireCooldown = altFireCooldown;
         this.AltFireAction = AltFireAction;
-
-        altFireAmmo = maxAltFireAmmo;
+        
+        uiManager.SetAltFireActive(true);
+        uiManager.UpdateAltFireAmmoText(maxAltFireAmmo, maxAltFireAmmo);
     }
 
-    public void SetSpecialAbility(float specialAbilityCooldown, Action SpecialAbilityAction) {
+    public void SetSpecialAbility(int specialAbilityCooldown, Action SpecialAbilityAction) {
         this.specialAbilityCooldown = specialAbilityCooldown;
         this.SpecialAbilityAction = SpecialAbilityAction;
+
+        uiManager.SetSpecialAbilityActive(true);
+        uiManager.SetSpecialAbilityCooldownActive(false);
     }
 
 
@@ -124,6 +136,20 @@ public class PlayerController : Ship {
         base.DecreaseHealth(healthDecrease);
         uiManager.UpdateHealthText(health, maxHealth);
     }
+
+
+    // Increase the player's alt-fire ammo, without going over the maximum ammo value
+    public void IncreaseAltFireAmmo(int ammoIncrease) {
+        altFireAmmo = Mathf.Min(maxAltFireAmmo, altFireAmmo + ammoIncrease);
+        uiManager.UpdateAltFireAmmoText(altFireAmmo, maxAltFireAmmo);
+    }
+
+    // Decrease the player's alt-fire ammo, without going below 0
+    public void DecreaseAltFireAmmo(int ammoDecrease) {
+        altFireAmmo = Mathf.Max(0, altFireAmmo +- ammoDecrease);
+        uiManager.UpdateAltFireAmmoText(altFireAmmo, maxAltFireAmmo);
+    }
+
 
     // Increase the player's maximum health, and healing for the same amount
     public void IncreaseMaxHealth(int maxHealthIncrease) {

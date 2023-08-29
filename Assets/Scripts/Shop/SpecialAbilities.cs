@@ -30,7 +30,7 @@ public class SpecialAbilities : MonoBehaviour {
 
 public class SpecialAbility : Enumeration {
 
-    public SpecialAbility(int id, string specialAbilityName, float cooldownTimer, Action specialAbilityAction) : base(id, specialAbilityName) {
+    public SpecialAbility(int id, string specialAbilityName, int cooldownTimer, Action specialAbilityAction) : base(id, specialAbilityName) {
         this.cooldownTimer = cooldownTimer;
         this.specialAbilityAction = specialAbilityAction;
     }
@@ -40,7 +40,7 @@ public class SpecialAbility : Enumeration {
     private PlayerController player;
     private Action specialAbilityAction;
 
-    private float cooldownTimer;
+    private int cooldownTimer;
 
 
     public void SetupSpecialAbility() {

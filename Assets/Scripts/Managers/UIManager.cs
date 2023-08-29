@@ -13,9 +13,9 @@ public class UIManager : MonoBehaviour
     private Texture2D crosshairCursor, pointerCursor;
 
     [SerializeField]
-    private GameObject gameScreen;
+    private GameObject gameScreen, altFireDisplay, specialAbilityDisplay;
     [SerializeField]
-    private TextMeshProUGUI healthText, goldText, waveText, enemiesText;
+    private TextMeshProUGUI healthText, goldText, waveText, enemiesText, altFireAmmoText, specialAbilityCooldownText;
 
     [SerializeField]
     private GameObject shopScreen;
@@ -52,8 +52,8 @@ public class UIManager : MonoBehaviour
 
     // Update the health text in the UI
     public void UpdateHealthText(int health, int maxHealth) {
-        healthText.text = "Health: " + health + " / " + maxHealth;
-        shopHealthText.text = "Health: " + health + " / " + maxHealth;
+        healthText.text = "Health: " + health + "/" + maxHealth;
+        shopHealthText.text = "Health: " + health + "/" + maxHealth;
     }
 
     // Update the gold text in the UI
@@ -75,6 +75,30 @@ public class UIManager : MonoBehaviour
         else {
             enemiesText.text = "Wave Complete. Next wave starting in " + spawnManager.GetWaveDelay() + " seconds.";
         }
+    }
+
+    // Set the alt fire display active
+    public void SetAltFireActive(bool setActive) {
+        altFireDisplay.SetActive(setActive);
+    }
+
+    // Uodate the alt-fire ammo text in the UI
+    public void UpdateAltFireAmmoText(int ammo, int maxAmmo) {
+        altFireAmmoText.text = ammo + "/" + maxAmmo;
+    }
+
+    // Set the special ability display active
+    public void SetSpecialAbilityActive(bool setActive) {
+        specialAbilityDisplay.SetActive(setActive);
+    }
+
+    public void SetSpecialAbilityCooldownActive(bool setActive) {
+        specialAbilityCooldownText.gameObject.SetActive(setActive);
+    }
+
+    // Uodate the special ability cooldown text in the UI
+    public void UpdateSpecialAbilityCooldownText(int cooldownTime) {
+        specialAbilityCooldownText.text = cooldownTime.ToString();
     }
 
 
@@ -99,6 +123,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Refresh all of the shop buttons
     public void RefreshShopButtons() {
         foreach (ShopButton shopButton in shopScreen.GetComponentsInChildren<ShopButton>()) {
             shopButton.RefreshButton();
