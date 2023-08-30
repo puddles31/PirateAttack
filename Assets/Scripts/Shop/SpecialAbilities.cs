@@ -10,7 +10,7 @@ public class SpecialAbilities : MonoBehaviour {
 
     private SpecialAbility heavyArmour, dash;
     [SerializeField]
-    private Sprite heavyArmourSprite;
+    private Sprite heavyArmourSprite, dashSprite;
     private int heavyArmourDuration = 10, heavyArmourCooldown = 30, dashForce = 15, dashCooldown = 6;
 
     private System.Random rnd;
@@ -24,7 +24,7 @@ public class SpecialAbilities : MonoBehaviour {
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
 
         heavyArmour = new(0, "Heavy Armour", heavyArmourCooldown, heavyArmourSprite, () => { StartCoroutine(HeavyArmourAction()); });
-        dash = new(1, "Dash", dashCooldown, heavyArmourSprite, () => { DashAction(); });
+        dash = new(1, "Dash", dashCooldown, dashSprite, () => { DashAction(); });
 
         specialAbilityList = new List<SpecialAbility>() { heavyArmour, dash };
     }
@@ -90,7 +90,7 @@ public class SpecialAbility : Enumeration {
     }
 
     public ShopItem ToShopItem() {
-        return new ShopItem(TYPENAME, Name, 150, SetupSpecialAbility);
+        return new ShopItem(TYPENAME, Name, 150, sprite, SetupSpecialAbility);
     }
 }
 

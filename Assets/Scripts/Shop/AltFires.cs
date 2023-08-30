@@ -14,7 +14,7 @@ public class AltFires : MonoBehaviour {
 
 
     private void Start() {
-        homingMissiles = new(0, "Homing Missiles", 5, 2, (pos) => { Debug.Log("BOOM"); });
+        homingMissiles = new(0, "Homing Missiles", 5, 2, null, (pos) => { Debug.Log("BOOM"); });
 
         altFireList = new List<AltFire>() { homingMissiles };
 
@@ -30,15 +30,17 @@ public class AltFires : MonoBehaviour {
 
 public class AltFire : Enumeration {
 
-    public AltFire(int id, string altFireName, int maxAmmo, float cooldownTimer, Action<Vector3> altFireAction) : base(id, altFireName) {
+    public AltFire(int id, string altFireName, int maxAmmo, float cooldownTimer, Sprite sprite, Action<Vector3> altFireAction) : base(id, altFireName) {
         this.maxAmmo = maxAmmo;
         this.cooldownTimer = cooldownTimer;
+        this.sprite = sprite;
         this.altFireAction = altFireAction;
     }
 
     private const string TYPENAME = "Alt-Fire";
 
     private PlayerController player;
+    private Sprite sprite;
     private Action<Vector3> altFireAction;
 
     private int maxAmmo;
@@ -54,7 +56,7 @@ public class AltFire : Enumeration {
     }
 
     public ShopItem ToShopItem() {
-        return new ShopItem(TYPENAME, Name, 100, SetupAltFire);
+        return new ShopItem(TYPENAME, Name, 100, sprite, SetupAltFire);
     }
 }
 

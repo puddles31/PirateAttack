@@ -18,11 +18,11 @@ public class PlayerStats : MonoBehaviour {
     private void Start() {
         playerController = gameObject.GetComponent<PlayerController>();
 
-        maxHealth = new(0, "Max Health", () => { playerController.IncreaseMaxHealth(1); });
-        cannonballDamage = new(1, "Cannonball Damage", () => { playerController.IncreaseCannonballDamage(1); });
-        cannonballSpeed = new(2, "Cannonball Speed", () => { playerController.IncreaseCannonballSpeed(5); });
-        fireRate = new(3, "Fire Rate", () => { playerController.DecreaseShootCooldown(0.12f); });
-        moveSpeed = new(4, "Move Speed", () => { playerController.IncreaseAcceleration(2); playerController.IncreaseAngularAcceleration(0.3f); });
+        maxHealth = new(0, "Max Health", null, () => { playerController.IncreaseMaxHealth(1); });
+        cannonballDamage = new(1, "Cannonball Damage", null, () => { playerController.IncreaseCannonballDamage(1); });
+        cannonballSpeed = new(2, "Cannonball Speed", null, () => { playerController.IncreaseCannonballSpeed(5); });
+        fireRate = new(3, "Fire Rate", null, () => { playerController.DecreaseShootCooldown(0.12f); });
+        moveSpeed = new(4, "Move Speed", null, () => { playerController.IncreaseAcceleration(2); playerController.IncreaseAngularAcceleration(0.3f); });
 
         statsList = new List<PlayerStat>() { maxHealth, cannonballDamage, cannonballSpeed, fireRate, moveSpeed };
 
@@ -38,12 +38,14 @@ public class PlayerStats : MonoBehaviour {
 [Serializable]
 public class PlayerStat : Enumeration {
 
-    public PlayerStat(int id, string statName, Action levelIncreaseAction) : base(id, statName) {
+    public PlayerStat(int id, string statName, Sprite sprite, Action levelIncreaseAction) : base(id, statName) {
         this.levelIncreaseAction = levelIncreaseAction;
+        this.sprite = sprite;
     }
 
     private const string TYPENAME = "Player Stat";
 
+    private Sprite sprite;
     private Action levelIncreaseAction;
 
     [SerializeField]
@@ -58,7 +60,7 @@ public class PlayerStat : Enumeration {
     }
 
     public ShopItem ToShopItem() {
-        return new ShopItem(TYPENAME, Name, 50, IncreaseLevel);
+        return new ShopItem(TYPENAME, Name, 50, sprite, IncreaseLevel);
     }
 }
 

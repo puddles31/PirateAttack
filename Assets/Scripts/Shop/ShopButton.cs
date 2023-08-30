@@ -14,6 +14,9 @@ public class ShopButton : MonoBehaviour
     [SerializeField]
     private GameObject soldOutText;
 
+    [SerializeField]
+    private Image itemImage;
+
     public bool isSoldOut;
     private Color tooExpensiveButtonColor, soldOutButtonColor, tooExpensiveTextColor, defaultTextColor;
 
@@ -41,6 +44,7 @@ public class ShopButton : MonoBehaviour
         nameText.text = shopItem.Name;
         typeText.text = shopItem.Type;
         priceText.text = shopItem.Price + " Gold";
+        itemImage.sprite = shopItem.ItemSprite;
 
         if (isSoldOut) {
             button.interactable = false;
