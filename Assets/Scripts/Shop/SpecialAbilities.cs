@@ -11,6 +11,7 @@ public class SpecialAbilities : MonoBehaviour {
     private SpecialAbility heavyArmour;
 
     private System.Random rnd;
+    private PlayerController player;
 
 
     private void Start() {
@@ -19,10 +20,16 @@ public class SpecialAbilities : MonoBehaviour {
         specialAbilityList = new List<SpecialAbility>() { heavyArmour };
 
         rnd = new System.Random();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     public List<SpecialAbility> RandomSelection(int n) {
         return specialAbilityList.OrderBy(x => rnd.Next()).Take(n).ToList();
+    }
+
+
+    private void HeavyArmourAction() {
+
     }
 
 }

@@ -30,8 +30,13 @@ public class Cannonball : MonoBehaviour {
             Destroy(gameObject); // Destroy cannonball
         }
         else if (!isFriendly && other.CompareTag("Player")) {
-            other.GetComponent<PlayerController>().DecreaseHealth(damage); // Decrease player health
-            Destroy(gameObject); // Destroy cannonball
+            if (other.GetComponent<PlayerController>().heavyArmourEnabled) {
+
+            }
+            else {
+                other.GetComponent<PlayerController>().DecreaseHealth(damage); // Decrease player health
+                Destroy(gameObject); // Destroy cannonball
+            }
         }
     }
 

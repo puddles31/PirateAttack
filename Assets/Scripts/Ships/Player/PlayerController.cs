@@ -6,11 +6,16 @@ using UnityEngine;
 public class PlayerController : Ship {
     
     private Plane groundPlane;
+
     private bool onShootCooldown, onAltFireCooldown, onSpecialAbilityCooldown;
     private float altFireCooldown;
     private int altFireAmmo, maxAltFireAmmo, specialAbilityCooldown;
+
+    public bool heavyArmourEnabled;
+
     private Action<Vector3> AltFireAction;
     private Action SpecialAbilityAction;
+
     private UIManager uiManager;
     private GameManager gameManager;
 
