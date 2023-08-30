@@ -13,7 +13,9 @@ public class UIManager : MonoBehaviour
     private Texture2D crosshairCursor, pointerCursor;
 
     [SerializeField]
-    private GameObject gameScreen, altFireDisplay, specialAbilityDisplay;
+    private GameObject gameScreen, altFireDisplay, specialAbilityDisplay, specialAbilityOutline, specialAbilityOverlay;
+    [SerializeField]
+    private Image specialAbilityImage;
     [SerializeField]
     private TextMeshProUGUI healthText, goldText, waveText, enemiesText, altFireAmmoText, specialAbilityCooldownText;
 
@@ -92,8 +94,18 @@ public class UIManager : MonoBehaviour
         specialAbilityDisplay.SetActive(setActive);
     }
 
+    // Set the special ability displat outline active
+    public void SetSpecialAbilityOutlineActive(bool setActive) {
+        specialAbilityOutline.SetActive(setActive);
+    }
+
     public void SetSpecialAbilityCooldownActive(bool setActive) {
+        specialAbilityOverlay.SetActive(setActive);
         specialAbilityCooldownText.gameObject.SetActive(setActive);
+    }
+
+    public void SetSpecialAbilitySprite(Sprite sprite) {
+        specialAbilityImage.sprite = sprite;
     }
 
     // Uodate the special ability cooldown text in the UI

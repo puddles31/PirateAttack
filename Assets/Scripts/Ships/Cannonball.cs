@@ -31,7 +31,8 @@ public class Cannonball : MonoBehaviour {
         }
         else if (!isFriendly && other.CompareTag("Player")) {
             if (other.GetComponent<PlayerController>().heavyArmourEnabled) {
-
+                isFriendly = true;
+                transform.Rotate(Vector3.up, 180);
             }
             else {
                 other.GetComponent<PlayerController>().DecreaseHealth(damage); // Decrease player health

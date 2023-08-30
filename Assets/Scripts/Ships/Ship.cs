@@ -66,10 +66,10 @@ public abstract class Ship : MonoBehaviour {
         towardsTarget.y = 0;
 
         // Create the cannonball and set its speed and faction
-        var cannonballTemp = Instantiate(cannonballPrefab, transform.position, Quaternion.LookRotation(towardsTarget));
-        cannonballTemp.GetComponent<Cannonball>().IsFriendly = isPlayer;
-        cannonballTemp.GetComponent<Cannonball>().Speed = cannonballSpeed;
-        cannonballTemp.GetComponent<Cannonball>().Damage = cannonballDamage;
+        var cannonballTemp = Instantiate(cannonballPrefab, transform.position, Quaternion.LookRotation(towardsTarget)).GetComponent<Cannonball>();
+        cannonballTemp.IsFriendly = isPlayer;
+        cannonballTemp.Speed = cannonballSpeed;
+        cannonballTemp.Damage = cannonballDamage;
     }
 
 

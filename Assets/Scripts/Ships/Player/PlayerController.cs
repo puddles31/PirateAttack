@@ -62,26 +62,25 @@ public class PlayerController : Ship {
         // Use special ability on spacebar, starting a cooldown timer - only if player has special ability (when cooldown not 0)
         if (Input.GetKeyDown(KeyCode.Space) && !onSpecialAbilityCooldown && specialAbilityCooldown != 0 && !gameManager.IsPaused) {
             onSpecialAbilityCooldown = true;
-            StartCoroutine(SpecialAbilityCooldownTimer());
             SpecialAbilityAction();
         }
     }
 
 
     // Cooldown timer for shooting cannonballs
-    IEnumerator ShootCooldownTimer() {
+    private IEnumerator ShootCooldownTimer() {
         yield return new WaitForSeconds(shootCooldown);
         onShootCooldown = false;
     }
 
     // Cooldown timer for alt fire
-    IEnumerator AltFireCooldownTimer() {
+    private IEnumerator AltFireCooldownTimer() {
         yield return new WaitForSeconds(altFireCooldown);
         onAltFireCooldown = false;
     }
 
     // Cooldown timer for special ability
-    IEnumerator SpecialAbilityCooldownTimer() {
+    public IEnumerator SpecialAbilityCooldownTimer() {
         uiManager.SetSpecialAbilityCooldownActive(true);
         
         for (int i = specialAbilityCooldown; i > 0; i--) {
