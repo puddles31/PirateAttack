@@ -8,10 +8,10 @@ public class SpecialAbilities : MonoBehaviour {
 
     private List<SpecialAbility> specialAbilityList;
 
-    private SpecialAbility heavyArmour;
+    private SpecialAbility heavyArmour, dash;
     [SerializeField]
     private Sprite heavyArmourSprite;
-    private float heavyArmourDuration = 10;
+    private int heavyArmourDuration = 10, heavyArmourCooldown = 30, dashForce = 15, dashCooldown = 6;
 
     private System.Random rnd;
     private PlayerController player;
@@ -23,9 +23,10 @@ public class SpecialAbilities : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
 
-        heavyArmour = new(0, "Heavy Armour", 30, heavyArmourSprite, () => { StartCoroutine(HeavyArmourAction()); });
+        heavyArmour = new(0, "Heavy Armour", heavyArmourCooldown, heavyArmourSprite, () => { StartCoroutine(HeavyArmourAction()); });
+        dash = new(1, "Dash", dashCooldown, heavyArmourSprite, () => { DashAction(); });
 
-        specialAbilityList = new List<SpecialAbility>() { heavyArmour };
+        specialAbilityList = new List<SpecialAbility>() { heavyArmour, dash };
     }
 
     public List<SpecialAbility> RandomSelection(int n) {
@@ -35,9 +36,27 @@ public class SpecialAbilities : MonoBehaviour {
     private IEnumerator HeavyArmourAction() {
         player.heavyArmourEnabled = true;
         uiManager.SetSpecialAbilityOutlineActive(true);
+
         yield return new WaitForSeconds(heavyArmourDuration);
+
         player.heavyArmourEnabled = false;
         uiManager.SetSpecialAbilityOutlineActive(false);
+
+        StartCoroutine(player.SpecialAbilityCooldownTimer());
+    }
+
+
+    private void DashAction() {
+        int horizontalForce = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
+        int verticalForce = (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0);
+
+        Rigidbody playerRb = player.gameObject.GetComponent<Rigidbody>();
+
+        playerRb.velocity = Vector3.zero;
+
+        Vector3 forceDir = (verticalForce * Vector3.forward) + (horizontalForce * Vector3.right);
+        playerRb.AddRelativeForce(forceDir.normalized * dashForce, ForceMode.VelocityChange);
+
         StartCoroutine(player.SpecialAbilityCooldownTimer());
     }
 }
