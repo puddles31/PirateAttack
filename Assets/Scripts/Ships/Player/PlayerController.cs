@@ -161,6 +161,7 @@ public class PlayerController : Ship {
         IncreaseHealth(maxHealthIncrease);
     }
 
+
     // Increase the player's acceleration
     public void IncreaseAcceleration(float accelerationIncrease) {
         acceleration += accelerationIncrease;
@@ -171,18 +172,36 @@ public class PlayerController : Ship {
         angularAcceleration += angularAccelerationIncrease;
     }
 
+
+    // Increase the player's shoot cooldown
+    public void IncreaseShootCooldown(float shootCooldownIncrease) {
+        shootCooldown += shootCooldownIncrease;
+    }
+
     // Decrease the player's shoot cooldown, without going below 0.1
     public void DecreaseShootCooldown(float shootCooldownDecrease) {
         shootCooldown = Mathf.Max(0.1f, shootCooldown - shootCooldownDecrease);
     }
+
 
     // Increase the player's cannonball speed
     public void IncreaseCannonballSpeed(float cannonballSpeedIncrease) {
         cannonballSpeed += cannonballSpeedIncrease;
     }
 
+    // Decrease the player's cannonball speed, without going below 10
+    public void DecreaseCannonballSpeed(float cannonballSpeedDecrease) {
+        cannonballSpeed = Mathf.Max(10, cannonballSpeed - cannonballSpeedDecrease);
+    }
+
+
     // Increase the player's cannonball damage
     public void IncreaseCannonballDamage(int cannonballDamageIncrease) {
         cannonballDamage += cannonballDamageIncrease;
+    }
+
+    // Decrease the player's cannonball damage, without going below 1
+    public void DecreaseCannonballDamage(int cannonballDamageDecrease) {
+        cannonballDamage = Mathf.Max(1, cannonballDamage - cannonballDamageDecrease);
     }
 }

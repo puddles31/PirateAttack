@@ -15,7 +15,7 @@ public class PlayerStats : MonoBehaviour {
     private PlayerController playerController;
 
 
-    private void Start() {
+    private void Awake() {
         playerController = gameObject.GetComponent<PlayerController>();
 
         maxHealth = new(0, "Max Health", null, () => { playerController.IncreaseMaxHealth(1); });

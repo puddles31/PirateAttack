@@ -13,7 +13,7 @@ public class AltFires : MonoBehaviour {
     private System.Random rnd;
 
 
-    private void Start() {
+    private void Awake() {
         homingMissiles = new(0, "Homing Missiles", 5, 2, null, (pos) => { Debug.Log("BOOM"); });
 
         altFireList = new List<AltFire>() { homingMissiles };

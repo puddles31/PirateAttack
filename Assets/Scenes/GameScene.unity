@@ -1402,6 +1402,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582677439}
   m_CullTransparentMesh: 1
+--- !u!1 &659868223 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3198362880719365012, guid: 53b4e80e64547724cb49fa791ac32ade, type: 3}
+  m_PrefabInstance: {fileID: 5405030818553067020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &659868229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659868223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.49411765, b: 0, a: 0.39215687}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &687764889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,7 +2461,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 25
   m_Depth: -1
   m_CullingMask:
@@ -3171,7 +3194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1455365082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4587,7 +4610,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3198362880719365012, guid: 53b4e80e64547724cb49fa791ac32ade, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 659868229}
   m_SourcePrefab: {fileID: 100100000, guid: 53b4e80e64547724cb49fa791ac32ade, type: 3}
 --- !u!1001 &5553648312659225003
 PrefabInstance:
