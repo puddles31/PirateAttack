@@ -31,7 +31,7 @@ public class SpecialAbilities : MonoBehaviour {
         dash = new(1, "Dash", dashCooldown, dashSprite, () => { DashAction(); });
         cannonBoost = new(2, "Cannon Boost", cannonBoostCooldown, cannonBoostSprite, () => { StartCoroutine(CannonBoostAction()); });
 
-        specialAbilityList = new List<SpecialAbility>() { heavyArmour, dash };
+        specialAbilityList = new List<SpecialAbility>() { heavyArmour, dash, cannonBoost };
     }
 
     public List<SpecialAbility> RandomSelection(int n) {
@@ -55,6 +55,10 @@ public class SpecialAbilities : MonoBehaviour {
         int horizontalForce = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
         int verticalForce = (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0);
 
+        if (verticalForce == 0 && horizontalForce == 0) {
+            verticalForce = 1;
+        }
+
         Rigidbody playerRb = player.gameObject.GetComponent<Rigidbody>();
 
         playerRb.velocity = Vector3.zero;
@@ -69,12 +73,14 @@ public class SpecialAbilities : MonoBehaviour {
         player.IncreaseCannonballDamage(3);
         player.IncreaseCannonballSpeed(15);
         player.DecreaseShootCooldown(0.25f);
+        uiManager.SetSpecialAbilityOutlineActive(true);
 
         yield return new WaitForSeconds(cannonBoostDuration);
 
         player.DecreaseCannonballDamage(3);
         player.DecreaseCannonballSpeed(15);
         player.IncreaseShootCooldown(0.25f);
+        uiManager.SetSpecialAbilityOutlineActive(false);
 
         StartCoroutine(player.SpecialAbilityCooldownTimer());
     }
