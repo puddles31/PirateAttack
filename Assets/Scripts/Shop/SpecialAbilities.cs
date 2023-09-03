@@ -8,30 +8,35 @@ public class SpecialAbilities : MonoBehaviour {
 
     private List<SpecialAbility> specialAbilityList;
 
-    private SpecialAbility heavyArmour, dash, cannonBoost;
+    private SpecialAbility heavyArmour, dash, cannonBoost, bulletTime;
 
     [SerializeField]
-    private Sprite heavyArmourSprite, dashSprite, cannonBoostSprite;
+    private Sprite heavyArmourSprite, dashSprite, cannonBoostSprite, bulletTimeSprite;
 
     private int heavyArmourDuration = 10, heavyArmourCooldown = 30;
     private int dashForce = 15, dashCooldown = 6;
     private int cannonBoostDuration = 10, cannonBoostCooldown = 30;
+    private float bulletTimeStrength = 0.25f;
+    private int bulletTimeDuration = 10, bulletTimeCooldown = 30;
 
     private System.Random rnd;
     private PlayerController player;
     private UIManager uiManager;
+    private SpawnManager spawnManager;
 
 
     private void Awake() {
         rnd = new System.Random();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         uiManager = GameObject.FindGameObjectWithTag("UI").GetComponent<UIManager>();
+        spawnManager = GameObject.FindGameObjectWithTag("SpawnManager").GetComponent<SpawnManager>();
 
         heavyArmour = new(0, "Heavy Armour", heavyArmourCooldown, heavyArmourSprite, () => { StartCoroutine(HeavyArmourAction()); });
         dash = new(1, "Dash", dashCooldown, dashSprite, () => { DashAction(); });
         cannonBoost = new(2, "Cannon Boost", cannonBoostCooldown, cannonBoostSprite, () => { StartCoroutine(CannonBoostAction()); });
+        bulletTime = new(3, "Bullet Time", bulletTimeCooldown, bulletTimeSprite, () => { StartCoroutine(BulletTimeAction()); });
 
-        specialAbilityList = new List<SpecialAbility>() { heavyArmour, dash, cannonBoost };
+        specialAbilityList = new List<SpecialAbility>() { heavyArmour, dash, cannonBoost, bulletTime };
     }
 
     public List<SpecialAbility> RandomSelection(int n) {
@@ -80,6 +85,46 @@ public class SpecialAbilities : MonoBehaviour {
         player.DecreaseCannonballDamage(3);
         player.DecreaseCannonballSpeed(15);
         player.IncreaseShootCooldown(0.25f);
+        uiManager.SetSpecialAbilityOutlineActive(false);
+
+        StartCoroutine(player.SpecialAbilityCooldownTimer());
+    }
+
+    private IEnumerator BulletTimeAction() {
+
+        foreach (var cannonballObj in GameObject.FindGameObjectsWithTag("Cannonball")) {
+            var cannonball = cannonballObj.GetComponent<Cannonball>();
+
+            if (!cannonball.IsFriendly) {
+                cannonball.TimeModifier = bulletTimeStrength;
+            }
+        }
+
+        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            enemy.GetComponent<Enemy>().SetBulletTimeActive(true, bulletTimeStrength);
+        }
+
+        spawnManager.bulletTimeActive = true;
+        spawnManager.bulletTimeStrength = bulletTimeStrength;
+
+        uiManager.SetSpecialAbilityOutlineActive(true);
+
+        yield return new WaitForSeconds(bulletTimeDuration);
+
+        foreach (var cannonballObj in GameObject.FindGameObjectsWithTag("Cannonball")) {
+            var cannonball = cannonballObj.GetComponent<Cannonball>();
+
+            if (!cannonball.IsFriendly) {
+                cannonball.TimeModifier = 1;
+            }
+        }
+
+        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            enemy.GetComponent<Enemy>().SetBulletTimeActive(false, bulletTimeStrength);
+        }
+
+        spawnManager.bulletTimeActive = false;
+
         uiManager.SetSpecialAbilityOutlineActive(false);
 
         StartCoroutine(player.SpecialAbilityCooldownTimer());

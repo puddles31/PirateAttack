@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Ship : MonoBehaviour {
 
-    private Rigidbody shipRb;
+    protected Rigidbody shipRb;
 
     protected bool isPlayer;
 
@@ -60,7 +60,7 @@ public abstract class Ship : MonoBehaviour {
 
 
     // Shoot a cannonball towards the target position
-    protected void ShootCannonball(Vector3 targetPosition) {
+    protected virtual Cannonball ShootCannonball(Vector3 targetPosition) {
         // Get the vector from the ship to the target
         Vector3 towardsTarget = (targetPosition - transform.position).normalized;
         towardsTarget.y = 0;
@@ -70,6 +70,8 @@ public abstract class Ship : MonoBehaviour {
         cannonballTemp.IsFriendly = isPlayer;
         cannonballTemp.Speed = cannonballSpeed;
         cannonballTemp.Damage = cannonballDamage;
+
+        return cannonballTemp;
     }
 
 

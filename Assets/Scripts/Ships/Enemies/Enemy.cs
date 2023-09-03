@@ -11,6 +11,9 @@ public class Enemy : Ship
     [SerializeField]
     private float healthkitSpawnChance;
 
+    private bool bulletTimeActive;
+    private float bulletTimeStrength = 1;
+
 
     protected override void Start() {
         base.Start();
@@ -19,8 +22,8 @@ public class Enemy : Ship
         // Get reference to Player
         player = GameObject.FindGameObjectWithTag("Player");
 
-        // Set vertical force to 1 - always moving forwards
-        verticalForce = 1;
+        // Set vertical force to 1 (initially) - always moving forwards
+        verticalForce = bulletTimeStrength;
 
         // Start shooting cannonballs at player
         StartCoroutine(ShootAtPlayer());
@@ -34,7 +37,7 @@ public class Enemy : Ship
             float angleToPlayer = Vector3.SignedAngle(transform.forward, towardsPlayer, Vector3.up);
 
             // Set the horizontal force based on the angle to the player
-            horizontalForce = angleToPlayer / 180;
+            horizontalForce = angleToPlayer * bulletTimeStrength / 180;
         }
         else {
             horizontalForce = 0;
@@ -53,6 +56,38 @@ public class Enemy : Ship
         }
     }
 
+    protected override Cannonball ShootCannonball(Vector3 targetPosition) {
+        var cannonball = base.ShootCannonball(targetPosition);
+
+        if (bulletTimeActive) {
+            cannonball.TimeModifier = bulletTimeStrength;
+        }
+
+        return cannonball;
+    }
+
+    public void SetBulletTimeActive(bool isActive, float bulletTimeStrength) {
+        bulletTimeActive = isActive;
+        this.bulletTimeStrength = bulletTimeStrength;
+
+        if (isActive) {
+            verticalForce = bulletTimeStrength;
+            shootCooldown /= bulletTimeStrength;
+
+            if (shipRb != null && shipRb.velocity != null && shipRb.angularVelocity != null) {
+                shipRb.velocity *= bulletTimeStrength;
+                shipRb.angularVelocity *= bulletTimeStrength;
+            }
+            
+        }
+        else {
+            verticalForce = 1;
+            shootCooldown *= bulletTimeStrength;
+            shipRb.velocity /= bulletTimeStrength;
+            shipRb.angularVelocity /= bulletTimeStrength;
+        }
+        
+    }
 
     // When the ship is destroyed, spawn a treasure pickup and a chance for a healthkit pickup
     protected override void DestroyShip() {

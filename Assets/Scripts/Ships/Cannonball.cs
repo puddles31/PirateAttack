@@ -7,16 +7,19 @@ public class Cannonball : MonoBehaviour {
     private float speed;
     public float Speed { set { speed = value; } }
 
+    private float timeModifier = 1;
+    public float TimeModifier { set { timeModifier = value; } }
+
     private int damage;
     public int Damage { set { damage = value; } }
 
     private bool isFriendly;
-    public bool IsFriendly { set { isFriendly = value; } }
+    public bool IsFriendly { get { return isFriendly; } set { isFriendly = value; } }
 
 
     void Update() {
         // Move cannonball forward at constant speed
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * speed * Time.deltaTime * timeModifier);
     }
 
 

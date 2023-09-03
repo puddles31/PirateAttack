@@ -18,6 +18,9 @@ public class SpawnManager : MonoBehaviour
     private float minSpawnDelay = 4, maxSpawnDelay = 6, absoluteMinSpawnDelay = 1, spawnDelayChange = 0.25f;
     private int minSpawnNo = 1, maxSpawnNo = 1, wavesToIncreaseSpawnNo = 3, enemiesToSpawnIncrease = 5;
     private bool betweenWaves;
+
+    public bool bulletTimeActive;
+    public float bulletTimeStrength;
     
 
     private void Start()
@@ -129,7 +132,11 @@ public class SpawnManager : MonoBehaviour
         Vector3 spawnPos = wallTransform.TransformPoint(new Vector3(randomX, 0, spawnOffsetZ));
 
         // Spawn the enemy
-        Instantiate(enemyPrefab, spawnPos, wallTransform.rotation);
+        var enemy = Instantiate(enemyPrefab, spawnPos, wallTransform.rotation);
+
+        if (bulletTimeActive) {
+            enemy.GetComponent<Enemy>().SetBulletTimeActive(true, bulletTimeStrength);
+        }
     }
 
 

@@ -10,6 +10,8 @@ TagManager:
   - UI
   - GameManager
   - Merchant
+  - Cannonball
+  - SpawnManager
   layers:
   - Default
   - TransparentFX
