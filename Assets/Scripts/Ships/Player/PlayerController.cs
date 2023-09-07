@@ -8,10 +8,11 @@ public class PlayerController : Ship {
     private Plane groundPlane;
 
     private bool onShootCooldown, onAltFireCooldown, onSpecialAbilityCooldown;
-    private float altFireCooldown;
+    private int altFireCooldown;
     private int altFireAmmo, maxAltFireAmmo, specialAbilityCooldown;
 
-    public bool heavyArmourEnabled;
+    public bool heavyArmourEnabled, bombShotActive;
+    public BombShot bombShot;
 
     private Action<Vector3> AltFireAction;
     private Action SpecialAbilityAction;
@@ -51,12 +52,23 @@ public class PlayerController : Ship {
             ShootCannonball(CalculateMousePos());
         }
 
-        // Shoot alternate fire on right mouse click, starting a cooldown timer and decreasing ammo - only if player has alt-fire (when max ammo not 0)
-        if (Input.GetMouseButtonDown(1) && !onAltFireCooldown && altFireAmmo > 0 && maxAltFireAmmo > 0 && !gameManager.IsPaused) {
-            onAltFireCooldown = true;
-            DecreaseAltFireAmmo(1);
-            StartCoroutine(AltFireCooldownTimer());
-            AltFireAction(CalculateMousePos());
+        // Shoot alternate fire on right mouse click
+        if (Input.GetMouseButtonDown(1) && !gameManager.IsPaused) {
+
+            if (bombShotActive) {
+                Debug.Log("Bomb shot active: exploding");
+                bombShot.Explode();
+            }
+            else if (!onAltFireCooldown && altFireAmmo > 0 && maxAltFireAmmo > 0) {
+                Debug.Log("Bomb shot not active: spawning bomb");
+                onAltFireCooldown = true;
+                DecreaseAltFireAmmo(1);
+                AltFireAction(CalculateMousePos());
+            }
+            else {
+                Debug.Log("On cooldown");
+            }
+            
         }
 
         // Use special ability on spacebar, starting a cooldown timer - only if player has special ability (when cooldown not 0)
@@ -73,9 +85,20 @@ public class PlayerController : Ship {
         onShootCooldown = false;
     }
 
+    public void StartAltFireCooldown() {
+        StartCoroutine(AltFireCooldownTimer());
+    }
+
     // Cooldown timer for alt fire
     private IEnumerator AltFireCooldownTimer() {
-        yield return new WaitForSeconds(altFireCooldown);
+        uiManager.SetAltFireCooldownActive(true);
+
+        for (int i = altFireCooldown; i > 0; i--) {
+            uiManager.UpdateAltFireCooldownText(i);
+            yield return new WaitForSeconds(1);
+        }
+
+        uiManager.SetAltFireCooldownActive(false);
         onAltFireCooldown = false;
     }
 
@@ -110,7 +133,7 @@ public class PlayerController : Ship {
     }
 
 
-    public void SetAltFire(int maxAltFireAmmo, float altFireCooldown, Action<Vector3> AltFireAction) {
+    public void SetAltFire(int maxAltFireAmmo, int altFireCooldown, Action<Vector3> AltFireAction) {
         this.maxAltFireAmmo = maxAltFireAmmo;
         altFireAmmo = maxAltFireAmmo;
         this.altFireCooldown = altFireCooldown;

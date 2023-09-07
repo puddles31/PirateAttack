@@ -13,11 +13,11 @@ public class UIManager : MonoBehaviour
     private Texture2D crosshairCursor, pointerCursor;
 
     [SerializeField]
-    private GameObject gameScreen, altFireDisplay, specialAbilityDisplay, specialAbilityOutline, specialAbilityOverlay;
+    private GameObject gameScreen, altFireDisplay, altFireOutline, altFireOverlay, specialAbilityDisplay, specialAbilityOutline, specialAbilityOverlay;
     [SerializeField]
-    private Image specialAbilityImage;
+    private Image altFireImage, specialAbilityImage;
     [SerializeField]
-    private TextMeshProUGUI healthText, goldText, waveText, enemiesText, altFireAmmoText, specialAbilityCooldownText;
+    private TextMeshProUGUI healthText, goldText, waveText, enemiesText, altFireAmmoText, altFireCooldownText, specialAbilityCooldownText;
 
     [SerializeField]
     private GameObject shopScreen;
@@ -79,6 +79,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
     // Set the alt fire display active
     public void SetAltFireActive(bool setActive) {
         altFireDisplay.SetActive(setActive);
@@ -89,12 +90,32 @@ public class UIManager : MonoBehaviour
         altFireAmmoText.text = ammo + "/" + maxAmmo;
     }
 
+    // Set the alt-fire display outline active
+    public void SetAltFireOutlineActive(bool setActive) {
+        altFireOutline.SetActive(setActive);
+    }
+
+    public void SetAltFireCooldownActive(bool setActive) {
+        altFireOverlay.SetActive(setActive);
+        altFireCooldownText.gameObject.SetActive(setActive);
+    }
+
+    public void SetAltFireSprite(Sprite sprite) {
+        altFireImage.sprite = sprite;
+    }
+
+    // Uodate the alt-fire cooldown text in the UI
+    public void UpdateAltFireCooldownText(int cooldownTime) {
+        altFireCooldownText.text = cooldownTime.ToString();
+    }
+
+
     // Set the special ability display active
     public void SetSpecialAbilityActive(bool setActive) {
         specialAbilityDisplay.SetActive(setActive);
     }
 
-    // Set the special ability displat outline active
+    // Set the special ability display outline active
     public void SetSpecialAbilityOutlineActive(bool setActive) {
         specialAbilityOutline.SetActive(setActive);
     }
