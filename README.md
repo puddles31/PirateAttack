@@ -4,8 +4,8 @@ A Unity game where you survive waves of enemy ships! Collect treasure from defea
 
 ## Screenshots
 
-![Gameplay Screenshot](https://ibb.co/BKHqsnM)
-![Merchant Screenshot](https://ibb.co/M1hkTbC)
+![Gameplay Screenshot](https://i.ibb.co/zHWGf6v/Screenshot-2023-10-13-171141.png)
+![Merchant Screenshot](https://i.ibb.co/7pztcH1/Screenshot-2023-10-13-170806.png)
 
 ## Features
 
