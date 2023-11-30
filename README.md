@@ -1,6 +1,7 @@
 # Pirate Attack
 
 A Unity game where you survive waves of enemy ships! Collect treasure from defeated foes, and purchase upgrades from the merchant ship between waves in order to boost your chances of survival.
+**Note: This game is still in development. Some features currently do not work as intended.**
 
 ## Screenshots
 
@@ -19,6 +20,7 @@ A Unity game where you survive waves of enemy ships! Collect treasure from defea
 
 ## Planned Features
 
+- Update the Merchant ship to only spawn between rounds
 - Consumable items (health kit, ammo box)
 - Alt-fire abilities (bomb shot, homing missiles, and more!)
 - Updates to enemy spawning systems
