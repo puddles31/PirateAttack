@@ -75,7 +75,8 @@ public class UIManager : MonoBehaviour
             enemiesText.text = enemies + " Enemies Left";
         }
         else {
-            enemiesText.text = "Wave Complete. Next wave starting in " + spawnManager.GetWaveDelay() + " seconds.";
+            //enemiesText.text = "Wave Complete. Next wave starting in " + spawnManager.GetWaveDelay() + " seconds.";
+            enemiesText.text = "Wave Complete.";
         }
     }
 
